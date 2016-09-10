@@ -12,7 +12,6 @@ export default {
       // with hot-reload because the reloaded component
       // preserves its current state and we are modifying
       // its initial state.
-      name: "Vue 2048",
       msg: 'Hello Vue!'
     }
   }
