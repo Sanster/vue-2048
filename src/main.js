@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Tile from './components/tile.vue'
+import KeyboardInputManager from './keys.js'
 require('./style/game.scss')
 
 new Vue({
@@ -22,6 +23,9 @@ new Vue({
 		init: function() {
 		    this.initArrayGrid(this.conf.size);
 
+		    this.tiles = [];
+		    this.updateScore(0);
+		    
 	    	for (var i = 0; i < this.startTiles; i++) {
 				this.addRandomTile();
 			}
@@ -92,6 +96,37 @@ new Vue({
 				return cells[Math.floor(Math.random() * cells.length)];
 			}
 		},
+		updateScore: function(score) {
+			var scoreContainer = document.getElementsByClassName('score-container')[0];
+
+			//On init
+			if (score === 0) {
+				this.conf.score = 0;
+				return false;
+			}
+
+			this.conf.score += score;
+
+			if (this.conf.score > this.conf.bestScore) {
+				this.conf.bestScore = this.conf.score;
+			}
+
+			// The mighty 2048 tile
+			if (score === 2048)
+				this.message(true);
+		},
+		keyUp: function() {
+			console.log("up")
+		},
+		keyDown: function() {
+			console.log("down")
+		},
+		keyLeft: function() {
+			console.log("left")
+		},
+		keyRight: function() {
+			console.log("right")
+		}
 	},
 	components: {
 		'tile': Tile,
