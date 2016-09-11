@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Tile from './components/tile.vue'
-import KeyboardInputManager from './keys.js'
 require('./style/game.scss')
 
 new Vue({
@@ -18,6 +17,7 @@ new Vue({
 	},
 	ready: function() {
 	    this.init();
+	    this.addKeyListener();
 	},
 	methods: {
 		init: function() {
@@ -25,7 +25,7 @@ new Vue({
 
 		    this.tiles = [];
 		    this.updateScore(0);
-		    
+
 	    	for (var i = 0; i < this.startTiles; i++) {
 				this.addRandomTile();
 			}
@@ -115,17 +115,30 @@ new Vue({
 			if (score === 2048)
 				this.message(true);
 		},
-		keyUp: function() {
-			console.log("up")
+		move: function(direction) {
+			console.log(direction)
 		},
-		keyDown: function() {
-			console.log("down")
-		},
-		keyLeft: function() {
-			console.log("left")
-		},
-		keyRight: function() {
-			console.log("right")
+		addKeyListener: function() {
+	        var map = {
+			    38: 0, // Up
+			    39: 1, // Right
+			    40: 2, // Down
+			    37: 3, // Left
+			};
+
+			// Respond to direction keys
+			document.addEventListener("keydown", (event) => {
+				var modifiers = event.altKey || event.ctrlKey || event.metaKey ||
+				                event.shiftKey;
+				var mapped    = map[event.which];
+
+				if (!modifiers) {
+				  if (mapped !== undefined) {
+				    event.preventDefault();
+				    this.move(mapped);
+				  }
+				}
+			});
 		}
 	},
 	components: {
