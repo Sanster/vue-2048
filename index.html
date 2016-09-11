@@ -9,8 +9,8 @@
 			<section class="heading">
 				<h1 class="title">2048</h1>
 				<div class="scores-container">
-					<div class="score-container">124</div>
-					<div class="best-container">666</div>
+					<div class="score-container">{{conf.score}}</div>
+					<div class="best-container">{{conf.bestScore}}</div>
 				</div>
 			</section>
 
@@ -27,6 +27,7 @@
 				</div>
 
 				<div class="tile-container" id="tile-container">
+					<tile v-for="tile in tiles" :tile="tile"> </tile>
 				</div>
 			</section>
 
