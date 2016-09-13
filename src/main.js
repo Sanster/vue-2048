@@ -132,24 +132,14 @@ new Vue({
 
 		},
 
-		mergeTiles: function(curr, next, position) {
-
+		mergeTiles: function(curr, next)  {
 			next.value *= 2;
 			next.merged = true;
 			
-			var tiles = this.tiles;
-
-			//Better Way to find index of data
-			for (var key in tiles) {
-				if (tiles[key].x === curr.x && tiles[key].y === curr.y) {
-					this.tiles.$remove(parseInt(key));
-					break;
-				}
-			}
-
 			this.grids[curr.x][curr.y] = 0;
+			
+			this.tiles.$remove(curr);
 
-			// Update the score
 			this.updateScore(next.value);
 
 			return true;
@@ -157,7 +147,14 @@ new Vue({
 
 		move: function(direction) {
 			var vector = this.getVector(direction);
+			console.log('===============vector================')
+			console.log(vector)
+			console.log("\n")
 			var traversals = this.buildTraversals(vector);
+			console.log("=========traversals===========")
+			console.log(traversals);
+			console.log("\n")
+
 			var moved = false;
 			var positions;
 			var next;
@@ -167,22 +164,23 @@ new Vue({
 				traversals.y.forEach( (y) => {
 					// console.log(x, y);
 					if (this.grids[x][y]) {
-						var tile = this.findTile({
-							x: x,
-							y: y
-						});
-						
+						var tile = this.findTile({ x: x, y: y });
+						console.log("tile (" + tile.x + ", " + tile.y + ") value: "+ tile.value)
+
+						//找到 tile 最远可以移动的位置
 						var positions = this.findFarthestPosition({
 							x: x,
 							y: y
 						}, vector);
-						//console.log(positions);
-						var next = this.findTile(positions.next);
+						console.log("fartchest position: (" + positions.farthest.x + ", " + positions.farthest.y + ")")
 
-						//console.log(next); 
+						var nextTile = this.findTile(positions.next);
+
+						console.log("next tile (" + positions.next.x + ", " + positions.next.y + ")")
+						console.log("\n")
 						// Only one merger per row traversal?
-						if (next && next.value === tile.value) {
-							moved = this.mergeTiles(tile, next, positions.next);
+						if (nextTile && nextTile.value === tile.value) {
+							moved = this.mergeTiles(tile, nextTile);
 						} else {
 							moved = this.moveTile(tile, positions.farthest);
 						}
@@ -243,6 +241,8 @@ new Vue({
 			return false;
 		},
 
+		// Y 方向向下为正常方向
+		// X 方向向右为正常方向
 		getVector: function(direction) {
 			var map = {
 				0: {x: 0, y: -1 }, // Up
@@ -264,6 +264,7 @@ new Vue({
 			}
 
 			// Always traverse from the farthest cell in the chosen direction
+			// 如果是往下移动，则从 y=3 开始移动方块，traversal 最终为 [3,2,1,0]
 			if (vector.x === 1) traversals.x = traversals.x.reverse();
 			if (vector.y === 1) traversals.y = traversals.y.reverse();
 
