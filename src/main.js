@@ -141,8 +141,6 @@ new Vue({
 			this.tiles.$remove(curr);
 
 			this.updateScore(next.value);
-
-			return true;
 		},
 
 		move: function(direction) {
@@ -177,18 +175,23 @@ new Vue({
 						var nextTile = this.findTile(positions.next);
 
 						console.log("next tile (" + positions.next.x + ", " + positions.next.y + ")")
-						console.log("\n")
+						console.log(nextTile)
+						
 						// Only one merger per row traversal?
 						if (nextTile && nextTile.value === tile.value) {
-							moved = this.mergeTiles(tile, nextTile);
+							this.mergeTiles(tile, nextTile);
+							moved = true;
 						} else {
-							moved = this.moveTile(tile, positions.farthest);
+							var _moved = this.moveTile(tile, positions.farthest);
+							if (_moved==true) moved = true;
 						}
+						console.log("\n")
 					}
 				});
 			});
 
 			if (moved) {
+				console.log("moved!")
 				this.addRandomTile();
 
 				if (this.grids.toString().indexOf('0') === -1) {
