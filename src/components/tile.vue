@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="tile tile-{{tile.value}} tile-new{{merged ? ' tile-merged' : ''}}"
+		class="tile tile-{{tile.value}} tile-new{{tile.merged ? ' tile-merged' : ''}}"
 		:style="{transform: 'translate(' + calcStyleX + 'px,' + calcStyleY + 'px)'}"
 		>
 		<div class="tile-inner">{{tile.value}}</div>
