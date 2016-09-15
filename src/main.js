@@ -166,6 +166,7 @@ new Vue({
 					if (this.grids[x][y]) {
 						var tile = this.findTile({ x: x, y: y });
 						tile.new = false;
+						tile.merged = false;
 						
 						console.log("tile (" + tile.x + ", " + tile.y + ") value: "+ tile.value)
 
