@@ -52,7 +52,8 @@ new Vue({
 					x: randomCell.x,
 					y: randomCell.y,
 					value: value,
-					merged: false
+					merged: false,
+					new: true,
 				});
 			}
 		},
@@ -66,6 +67,7 @@ new Vue({
 				y: tile.y,
 				value: tile.value,
 				merged: tile.merged,
+				new: tile.new,
 			});
 
 			this.grids[tile.x][tile.y] = 1;
@@ -163,6 +165,8 @@ new Vue({
 					// console.log(x, y);
 					if (this.grids[x][y]) {
 						var tile = this.findTile({ x: x, y: y });
+						tile.new = false;
+						
 						console.log("tile (" + tile.x + ", " + tile.y + ") value: "+ tile.value)
 
 						//找到 tile 最远可以移动的位置
