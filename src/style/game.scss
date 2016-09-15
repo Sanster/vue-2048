@@ -100,6 +100,35 @@ h1.title {
   }
 }
 
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+};
+
+
+@include keyframes(appear) {
+	0% {
+    	opacity: 0;
+    	-webkit-transform: scale(0);
+    	-moz-transform: scale(0);
+    	transform: scale(0); 
+    }
+
+  	100% {
+    	opacity: 1;
+    	-webkit-transform: scale(1);
+    	-moz-transform: scale(1);
+    	transform: scale(1); 
+    } 
+};
+
 .game-container {
 	margin-top: 60px;
 	position: relative;
@@ -163,61 +192,15 @@ h1.title {
 		line-height: 116.25px; 
 	}
 
-	@-webkit-keyframes appear {
-		0% {
-		    opacity: 0;
-		    -webkit-transform: scale(0);
-		    -moz-transform: scale(0);
-		    transform: scale(0); 
-		}
-
-		100% {
-		    opacity: 1;
-		    -webkit-transform: scale(1);
-		    -moz-transform: scale(1);
-		    transform: scale(1); 
-		} 
-	}
-
-	@-moz-keyframes appear {
-	  	0% {
-	    	opacity: 0;
-	    	-webkit-transform: scale(0);
-	    	-moz-transform: scale(0);
-	    	transform: scale(0); 
-		}
-
-		100% {
-	    	opacity: 1;
-	    	-webkit-transform: scale(1);
-	    	-moz-transform: scale(1);
-	    	transform: scale(1); 
-	    } 
-	}
-
-	@keyframes appear {
-		0% {
-	    	opacity: 0;
-	    	-webkit-transform: scale(0);
-	    	-moz-transform: scale(0);
-	    	transform: scale(0); 
-	    }
-
-	  	100% {
-	    	opacity: 1;
-	    	-webkit-transform: scale(1);
-	    	-moz-transform: scale(1);
-	    	transform: scale(1); 
-	    } 
-	}
+	
 
 	.tile-new .tile-inner {
-	  -webkit-animation: appear 200ms ease 100ms;
-	  -moz-animation: appear 200ms ease 100ms;
-	  animation: appear 200ms ease 100ms;
-	  -webkit-animation-fill-mode: backwards;
-	  -moz-animation-fill-mode: backwards;
-	  animation-fill-mode: backwards; 
+		-webkit-animation: appear 200ms ease 100ms;
+		-moz-animation: appear 200ms ease 100ms;
+		animation: appear 200ms ease 100ms;
+	  	-webkit-animation-fill-mode: backwards;
+	  	-moz-animation-fill-mode: backwards;
+	  	animation-fill-mode: backwards; 
 	}
 
 	.tile {
