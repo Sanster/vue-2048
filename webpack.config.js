@@ -7,7 +7,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: '[name].js'
+    filename: '[name].js',
+    sourceMapFilename: '[file].map'
   },
   resolveLoader: {
     root: path.join(__dirname, 'node_modules'),
