@@ -167,7 +167,7 @@ new Vue({
 						var tile = this.findTile({ x: x, y: y });
 						tile.new = false;
 						tile.merged = false;
-						
+
 						console.log("tile (" + tile.x + ", " + tile.y + ") value: "+ tile.value)
 
 						//找到 tile 最远可以移动的位置
@@ -183,7 +183,7 @@ new Vue({
 						console.log(nextTile)
 						
 						// Only one merger per row traversal?
-						if (nextTile && nextTile.value === tile.value) {
+						if (nextTile && nextTile.value === tile.value && nextTile.merged == false) {
 							this.mergeTiles(tile, nextTile);
 							moved = true;
 						} else {
