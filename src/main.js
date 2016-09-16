@@ -1,5 +1,6 @@
-import Vue from 'vue'
-import Tile from './components/tile.vue'
+import Vue from 'vue';
+import Tile from './components/tile.vue';
+import {gameStorage} from './store';
 require('./style/game.scss')
 
 new Vue({
@@ -12,12 +13,31 @@ new Vue({
 		conf: {
 			score: 0,
 			size: 4,
-			bestScore: 0
+			bestScore: 0,
 		}
 	},
 	ready: function() {
-	    this.init();
+		var tiles = gameStorage.fetch('vue2048');
+		var conf = gameStorage.fetch('vue2048-config');
+
+		if (conf.score) {
+			this.conf = conf;
+			this.continueGame(tiles);
+		} else {
+	    	this.init();
+		}
+
 	    this.addKeyListener();
+
+    	this.$watch('tiles', function(tiles) {
+			gameStorage.save('vue2048', tiles);
+		});
+
+		this.$watch('conf', function(conf) {
+			gameStorage.save('vue2048-config', conf);
+		}, {
+			deep: true
+		});
 	},
 	methods: {
 		init: function() {
@@ -29,6 +49,14 @@ new Vue({
 	    	for (var i = 0; i < this.startTiles; i++) {
 				this.addRandomTile();
 			}
+		},
+		continueGame: function(tiles) {
+			this.initArrayGrid(this.conf.size);
+			this.tiles = tiles;
+
+			tiles.forEach( (item) => {
+				this.grids[item.x][item.y] = 1;
+			});
 		},
 		initArrayGrid: function(size) {
 		    var arr = [];
@@ -99,8 +127,6 @@ new Vue({
 			}
 		},
 		updateScore: function(score) {
-			var scoreContainer = document.getElementsByClassName('score-container')[0];
-
 			//On init
 			if (score === 0) {
 				this.conf.score = 0;
@@ -147,13 +173,13 @@ new Vue({
 
 		move: function(direction) {
 			var vector = this.getVector(direction);
-			console.log('===============vector================')
-			console.log(vector)
-			console.log("\n")
+			// console.log('===============vector================')
+			// console.log(vector)
+			// console.log("\n")
 			var traversals = this.buildTraversals(vector);
-			console.log("=========traversals===========")
-			console.log(traversals);
-			console.log("\n")
+			// console.log("=========traversals===========")
+			// console.log(traversals);
+			// console.log("\n")
 
 			var moved = false;
 			var positions;
@@ -168,19 +194,19 @@ new Vue({
 						tile.new = false;
 						tile.merged = false;
 
-						console.log("tile (" + tile.x + ", " + tile.y + ") value: "+ tile.value)
+						// console.log("tile (" + tile.x + ", " + tile.y + ") value: "+ tile.value)
 
 						//找到 tile 最远可以移动的位置
 						var positions = this.findFarthestPosition({
 							x: x,
 							y: y
 						}, vector);
-						console.log("fartchest position: (" + positions.farthest.x + ", " + positions.farthest.y + ")")
+						// console.log("fartchest position: (" + positions.farthest.x + ", " + positions.farthest.y + ")")
 
 						var nextTile = this.findTile(positions.next);
 
-						console.log("next tile (" + positions.next.x + ", " + positions.next.y + ")")
-						console.log(nextTile)
+						// console.log("next tile (" + positions.next.x + ", " + positions.next.y + ")")
+						// console.log(nextTile)
 						
 						// Only one merger per row traversal?
 						if (nextTile && nextTile.value === tile.value && nextTile.merged == false) {
@@ -190,13 +216,13 @@ new Vue({
 							var _moved = this.moveTile(tile, positions.farthest);
 							if (_moved==true) moved = true;
 						}
-						console.log("\n")
+						// console.log("\n")
 					}
 				});
 			});
 
 			if (moved) {
-				console.log("moved!")
+				// console.log("moved!")
 				this.addRandomTile();
 
 				if (this.grids.toString().indexOf('0') === -1) {
