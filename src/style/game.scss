@@ -1,11 +1,8 @@
-$background-color: #faf8ef;
-$font-color: #776e65;
-
 html, body {
   margin: 0;
   padding: 0;
-  background: $background-color;
-  color: $font-color;
+  background: #faf8ef;
+  color: #776e65;
   font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
   font-size: 18px;
 }
@@ -132,9 +129,9 @@ h1.title {
 
 @include keyframes(pop) {
 	0% {
-	    -webkit-transform: scale(0);
-	    -moz-transform: scale(0);
-	    transform: scale(0); 
+	    -webkit-transform: scale(0.3);
+	    -moz-transform: scale(0.3);
+	    transform: scale(0.3); 
 	}
 
 	50% {
@@ -160,10 +157,16 @@ h1.title {
   animation-fill-mode: backwards; 
 }
 
+$game-container-width: 500px;
+$game-container-padding: 15px;
+$grid-margin-right: 15px;
+$grid-width: ($game-container-width - $game-container-padding*2 - $grid-margin-right*3) / 4;
+$tile-width: ceil($grid-width);
+
 .game-container {
 	margin-top: 60px;
 	position: relative;
-	padding: 15px;
+	padding: $game-container-padding;
 	cursor: default;
 	-webkit-touch-callout: none;
 	-ms-touch-callout: none;
@@ -174,8 +177,8 @@ h1.title {
 	touch-action: none;
 	background: #bbada0;
 	border-radius: 6px;
-	width: 500px;
-	height: 500px;
+	width: $game-container-width;
+	height: $game-container-width;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -199,8 +202,8 @@ h1.title {
 		}
 
 		.grid-cell {
-			width: 106.25px;
-			height: 106.25px;
+			width: $grid-width;
+			height: $grid-width;
 		    margin-right: 15px;
 		    float: left;
 		    border-radius: 3px;
@@ -218,9 +221,9 @@ h1.title {
 	}
 
 	.tile, .tile .tile-inner {
-		width: 107px;
-		height: 107px;
-		line-height: 116.25px; 
+		width: $tile-width;
+		height: $tile-width;
+		line-height: $tile-width;
 	}
 
 	
