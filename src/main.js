@@ -72,7 +72,7 @@ new Vue({
 		},
 		addRandomTile: function() {
 			if (this.availableCells().length > 0) {
-				var value = Math.random() < 0.6 ? 2 : 4;
+				var value = Math.random() < 0.9 ? 2 : 4;
 
 				var randomCell = this.randomAvailableCell();
 
