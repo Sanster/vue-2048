@@ -32,7 +32,13 @@ module.exports = {
         // loader: 'style!css!sass',
         loader: ExtractTextPlugin.extract("style","css!sass")
       }
+    ],
+    preLoaders: [
+      {test: /\.js$/, loader: "eslint", exclude: /node_modules/}
     ]
+  },
+  eslint: {
+    configFile: '.eslintrc.js'
   },
   plugins: [
       new ExtractTextPlugin("style.css")
