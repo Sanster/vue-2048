@@ -1,4 +1,6 @@
-const gameStorage = {
+
+// why prefer-default-export?
+export const gameStorage = {
   fetch(STORAGE_KEY) {
     return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
   },
@@ -6,6 +8,3 @@ const gameStorage = {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   },
 };
-
-// why prefer-default-export?
-export { gameStorage as default };

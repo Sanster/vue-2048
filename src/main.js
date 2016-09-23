@@ -18,12 +18,12 @@ new Vue({
     },
   },
   ready() {
-    const tiles = gameStorage.fetch('vue2048');
-    const conf = gameStorage.fetch('vue2048-config');
+    const tilesStoraged = gameStorage.fetch('vue2048');
+    const confStoraged = gameStorage.fetch('vue2048-config');
 
-    if (conf.score) {
-      this.conf = conf;
-      this.continueGame(tiles);
+    if (confStoraged.score) {
+      this.conf = confStoraged;
+      this.continueGame(tilesStoraged);
     } else {
       this.init();
     }
@@ -208,7 +208,6 @@ new Vue({
       });
 
       if (moved) {
-        // console.log("moved!")
         this.addRandomTile();
 
         if (this.grids.toString().indexOf('0') === -1) {
@@ -284,25 +283,27 @@ new Vue({
       if (position.x === -1 || position.y === -1) {
         return null;
       }
-      const tiles = this.tiles;
+      let tiles = this.tiles;
 
-      return tiles.filter((item) => {
-        return item.x === position.x && item.y === position.y;
-      })[0];
+      tiles = tiles.filter((item => item.x === position.x && item.y === position.y));
+
+      return tiles[0];
     },
-    findFarthestPosition(previousCell, vector) {
-      let nextCell;
+    findFarthestPosition(cell, vector) {
+      var previous;
 
       do {
-        nextCell = {
-          x: previousCell.x + vector.x,
-          y: previousCell.y + vector.y,
+        previous = cell;
+        cell = {
+          x: previous.x + vector.x,
+          y: previous.y + vector.y
         };
-      } while (this.withinBounds(nextCell) && !this.grids[nextCell.x][nextCell.y]);
+
+      } while (this.withinBounds(cell) && !this.grids[cell.x][cell.y]);
 
       return {
-        farthest: previousCell,
-        next: nextCell, // Used to check if a merge is required
+        farthest: previous,
+        next: cell // Used to check if a merge is required
       };
     },
     withinBounds(position) {
@@ -317,12 +318,11 @@ new Vue({
         40: 2, // Down
         37: 3, // Left
       };
-
       // Respond to direction keys
-      document.addEventListener('keydown', (event) => {
-        const modifiers = event.altKey || event.ctrlKey || event.metaKey ||
+      document.addEventListener("keydown", (event) => {
+        var modifiers = event.altKey || event.ctrlKey || event.metaKey ||
                         event.shiftKey;
-        const mapped = map[event.which];
+        var mapped    = map[event.which];
 
         if (!modifiers) {
           if (mapped !== undefined) {
