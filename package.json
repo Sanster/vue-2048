@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --hot -d",
     "build": "NODE_ENV=production webpack --progress --hide-modules && gulp toBlog",
-    "test": "karma start"
+    "test": "karma start",
+    "start": "node app.js"
   },
   "dependencies": {
+    "koa": "^2.0.0-alpha.7",
     "vue": "^1.0.26"
   },
   "devDependencies": {
