@@ -7,3 +7,5 @@ Fork from https://github.com/axilleasiv/vue2048
 * ES6(babel)
 * sass
 * eslint
+* koa
+* koa-static
