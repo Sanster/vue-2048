@@ -9,3 +9,6 @@ Fork from https://github.com/axilleasiv/vue2048
 * eslint
 * koa
 * koa-static
+
+测试
+测试2
